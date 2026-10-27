@@ -1,0 +1,10 @@
+match_date,stage,team_home,team_away,home_goals,away_goals,went_to_penalties,home_penalties,away_penalties,winner,result_status,source_url,verification_status
+
+2026-10-05,Group,University for Development Studies,Afe Babalola University,4,2,No,,,University for Development Studies,Final,https://data.allimediahub.com/,Verified
+2026-10-06,Group,Lead City University,University for Development Studies,1,0,No,,,Lead City University,Final,https://data.allimediahub.com/,Verified
+2026-10-06,Group,Obafemi Awolowo University,University of Energy and Natural Resources,3,0,No,,,Obafemi Awolowo University,Final,https://data.allimediahub.com/,Verified
+2026-10-07,Group,Afe Babalola University,Lead City University,0,2,No,,,Lead City University,Final,https://data.allimediahub.com/,Verified
+2026-10-08,Semi-final,Lead City University,University of Energy and Natural Resources,1,1,Yes,3,1,Lead City University,Final,https://data.allimediahub.com/,Verified
+2026-10-08,Semi-final,Obafemi Awolowo University,University for Development Studies,0,0,Yes,5,4,Obafemi Awolowo University,Final,https://data.allimediahub.com/,Verified
+2026-10-10,Third place,University for Development Studies,University of Energy and Natural Resources,0,0,Yes,3,4,University of Energy and Natural Resources,Final,https://data.allimediahub.com/,Verified
+2026-10-11,Final,Obafemi Awolowo University,Lead City University,1,1,Yes,5,4,Obafemi Awolowo University,Final,https://data.allimediahub.com/,Verified

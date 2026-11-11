@@ -1,0 +1,9 @@
+﻿match_date,stage,team_home,team_away,home_goals,away_goals,home_shots,away_shots,home_shots_on_target,away_shots_on_target,home_shot_accuracy_pct,away_shot_accuracy_pct,home_conversion_pct,away_conversion_pct
+2026-10-05,Group,University for Development Studies,Afe Babalola University,4,2,,,,,,,,
+2026-10-06,Group,Lead City University,University for Development Studies,1,0,,,,,,,,
+2026-10-06,Group,Obafemi Awolowo University,University of Energy and Natural Resources,3,0,,,,,,,,
+2026-10-07,Group,Afe Babalola University,Lead City University,0,2,,,,,,,,
+2026-10-08,Semi-final,Lead City University,University of Energy and Natural Resources,1,1,6,12,4,2,66.7,16.7,16.7,8.3
+2026-10-08,Semi-final,Obafemi Awolowo University,University for Development Studies,0,0,6,8,4,2,66.7,25.0,0.0,0.0
+2026-10-10,Third place,University for Development Studies,University of Energy and Natural Resources,0,0,18,13,4,6,22.2,46.2,0.0,0.0
+2026-10-11,Final,Obafemi Awolowo University,Lead City University,1,1,13,3,5,2,38.5,66.7,7.7,33.3

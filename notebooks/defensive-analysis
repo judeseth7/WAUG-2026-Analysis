@@ -1,0 +1,122 @@
+
+import csv
+from pathlib import Path
+
+INPUT_FILE = Path("reports/match-shooting-analysis.csv")
+OUTPUT_FILE = Path("reports/team-defensive-analysis.csv")
+
+teams = {}
+
+def get_team(name):
+    if name not in teams:
+        teams[name] = {
+            "matches_analyzed": 0,
+            "shots_conceded": 0,
+            "shots_on_target_conceded": 0,
+            "goals_conceded": 0
+        }
+    return teams[name]
+
+
+with INPUT_FILE.open("r", newline="", encoding="utf-8-sig") as file:
+    reader = csv.DictReader(file)
+
+    required_columns = {
+        "team_home", "team_away",
+        "home_goals", "away_goals",
+        "home_shots", "away_shots",
+        "home_shots_on_target", "away_shots_on_target"
+    }
+
+    missing = required_columns - set(reader.fieldnames or [])
+
+    if missing:
+        raise ValueError(f"Missing columns: {missing}")
+
+    for row in reader:
+        shooting_fields = [
+            "home_shots",
+            "away_shots",
+            "home_shots_on_target",
+            "away_shots_on_target"
+        ]
+
+        # Skip matches without complete shooting data
+        if any(not row[field].strip() for field in shooting_fields):
+            continue
+
+        home = row["team_home"]
+        away = row["team_away"]
+
+        home_stats = get_team(home)
+        away_stats = get_team(away)
+
+        # Home team faces the away team's shots
+        home_stats["matches_analyzed"] += 1
+        home_stats["shots_conceded"] += int(row["away_shots"])
+        home_stats["shots_on_target_conceded"] += int(
+            row["away_shots_on_target"]
+        )
+        home_stats["goals_conceded"] += int(row["home_goals"])
+
+        # Away team faces the home team's shots
+        away_stats["matches_analyzed"] += 1
+        away_stats["shots_conceded"] += int(row["home_shots"])
+        away_stats["shots_on_target_conceded"] += int(
+            row["home_shots_on_target"]
+        )
+        away_stats["goals_conceded"] += int(row["away_goals"])
+
+
+# Calculate defensive metrics
+output_rows = []
+
+for team, stats in teams.items():
+    matches = stats["matches_analyzed"]
+    shots = stats["shots_conceded"]
+    shots_on_target = stats["shots_on_target_conceded"]
+    goals = stats["goals_conceded"]
+
+    output_rows.append({
+        "Team": team,
+        "MatchesAnalyzed": matches,
+        "ShotsConceded": shots,
+        "ShotsOnTargetConceded": shots_on_target,
+        "GoalsConceded": goals,
+        "ShotsConcededPerMatch": round(shots / matches, 2),
+        "ShotsOnTargetConcededPerMatch": round(
+            shots_on_target / matches, 2
+        ),
+        "GoalsConcededPerMatch": round(goals / matches, 2),
+        "OpponentShotAccuracyPct": round(
+            shots_on_target / shots * 100, 1
+        ) if shots else 0,
+        "OpponentConversionPct": round(
+            goals / shots * 100, 1
+        ) if shots else 0
+    })
+
+
+# Sort by fewest goals conceded per match
+output_rows.sort(key=lambda row: row["GoalsConcededPerMatch"])
+
+OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+with OUTPUT_FILE.open("w", newline="", encoding="utf-8") as file:
+    writer = csv.DictWriter(file, fieldnames=output_rows[0].keys())
+    writer.writeheader()
+    writer.writerows(output_rows)
+
+
+print("\nDEFENSIVE PERFORMANCE ANALYSIS")
+print("-" * 70)
+
+for row in output_rows:
+    print(
+        f"{row['Team']}: "
+        f"{row['ShotsConceded']} shots conceded, "
+        f"{row['ShotsOnTargetConceded']} on target, "
+        f"{row['GoalsConceded']} goals conceded"
+    )
+
+print(f"\nReport saved to: {OUTPUT_FILE}")
